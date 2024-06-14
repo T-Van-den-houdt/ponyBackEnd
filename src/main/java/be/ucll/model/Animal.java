@@ -1,5 +1,6 @@
 package be.ucll.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+@Entity
 @Table(name = "MY_ANIMALS")
 public class Animal {
 
@@ -24,9 +26,17 @@ public class Animal {
     @Max(value = 50, message="Age must be a positive integer between 1 and 50")
     private int age;
 
+    public long getId() {
+        return id;
+    }
+
     public Animal(String name, int age) {
         setName(name);
         setAge(age);
+    }
+
+    protected Animal() {
+        
     }
 
     public String getName() {

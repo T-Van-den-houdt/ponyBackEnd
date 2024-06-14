@@ -18,20 +18,16 @@ public class AnimalService {
 
     public Animal addAnimal(Animal animal) {
         
-        List<Animal> animals = animalRepository.getAnimals();
+        List<Animal> animals = animalRepository.findAll();
         if (!animals.contains(animal)) {
-            animalRepository.addAnimal(animal);
+            animalRepository.save(animal);
         } else {
             throw new ServiceException("This name is already in the database");
         }
         
-        List<Animal> newAnimals = animalRepository.getAnimals();
-        System.out.println(newAnimals);
-        for(Animal a : newAnimals) {
-            if (a.equals(animal)) {
-                return a;
-            }
+        if(animalRepository.existsById(animal.getId())) {
+            return animal;
         }
-        throw new ServiceException("Something went wrong: animal has not been added");
+        throw new ServiceException("Something went wrong! Try again");
     }
 }
