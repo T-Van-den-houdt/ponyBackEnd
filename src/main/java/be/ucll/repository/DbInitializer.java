@@ -4,14 +4,17 @@ import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 import be.ucll.model.Animal;
+import be.ucll.model.Stable;
 
 @Component
 public class DbInitializer {
     
     private AnimalRepository animalRepository;
+    private StableRepository stableRepository;
 
-    public DbInitializer(AnimalRepository animalRepository) {
+    public DbInitializer(AnimalRepository animalRepository, StableRepository stableRepository) {
         this.animalRepository = animalRepository;
+        this.stableRepository = stableRepository;
     }
 
     @PostConstruct
@@ -26,5 +29,17 @@ public class DbInitializer {
         animalRepository.save(animal2);
         animalRepository.save(animal3);
         animalRepository.save(animal4);
+
+        Stable stable1 = new Stable("stblHN", 5);
+        Stable stable2 = new Stable("PonyCO", 3);
+
+
+        stable1.addAnimal(animal2);
+        stable2.addAnimal(animal3);
+
+        stableRepository.save(stable1);
+        stableRepository.save(stable2);
+        animalRepository.save(animal2);
+        animalRepository.save(animal3);
     }
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -26,10 +28,10 @@ public class Animal {
     @Max(value = 50, message="Age must be a positive integer between 1 and 50")
     private int age;
 
-    public long getId() {
-        return id;
-    }
-
+    @ManyToOne
+    @JoinColumn(name = "MY_STABLES_ID")
+    private Stable stable;
+    
     public Animal(String name, int age) {
         setName(name);
         setAge(age);
@@ -37,6 +39,10 @@ public class Animal {
 
     protected Animal() {
         
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -53,6 +59,14 @@ public class Animal {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Stable getStable() {
+        return stable;
+    }
+
+    public void setStable(Stable stable) {
+        this.stable = stable;
     }
 
     @Override
