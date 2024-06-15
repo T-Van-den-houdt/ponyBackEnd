@@ -49,8 +49,4 @@ public class StabelService {
             throw new ServiceException("The animal doesn't exist.");
         }
     }
-
-
-
-
 }

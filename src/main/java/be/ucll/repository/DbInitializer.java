@@ -3,18 +3,24 @@ package be.ucll.repository;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+import be.ucll.model.Address;
 import be.ucll.model.Animal;
 import be.ucll.model.Stable;
+import be.ucll.model.Toy;
 
 @Component
 public class DbInitializer {
     
     private AnimalRepository animalRepository;
     private StableRepository stableRepository;
+    private AddressRepository addressRepository;
+    private ToyRepository toyRepository;
 
-    public DbInitializer(AnimalRepository animalRepository, StableRepository stableRepository) {
+    public DbInitializer(AnimalRepository animalRepository, StableRepository stableRepository, AddressRepository addressRepository, ToyRepository toyRepository) {
         this.animalRepository = animalRepository;
         this.stableRepository = stableRepository;
+        this.addressRepository = addressRepository;
+        this.toyRepository = toyRepository;
     }
 
     @PostConstruct
@@ -33,10 +39,23 @@ public class DbInitializer {
         Stable stable1 = new Stable("stblHN", 5);
         Stable stable2 = new Stable("PonyCO", 3);
 
+        Address address1 = new Address("Ucll-straat", 69, "Haasrode");
+        Address address2 = new Address("WidowmakerOverwatchStraat", 420, "Leuven");
+
+        Toy toy1 = new Toy("Ball");
+        toy1.addAnimal(animal2);
+        animal2.addToy(toy1);
+        toyRepository.save(toy1);
+        animalRepository.save(animal2);
+
+        stable1.setAddress(address1);
+        stable2.setAddress(address2);
 
         stable1.addAnimal(animal2);
         stable2.addAnimal(animal3);
 
+        addressRepository.save(address1);
+        addressRepository.save(address2);
         stableRepository.save(stable1);
         stableRepository.save(stable2);
         animalRepository.save(animal2);

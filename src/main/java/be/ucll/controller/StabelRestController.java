@@ -37,6 +37,4 @@ public class StabelRestController {
     public Stable getStableWithAnimal(@PathVariable String animalName) {
         return stabelService.getStableWithAnimal(animalName);
     }
-    
-    
 }

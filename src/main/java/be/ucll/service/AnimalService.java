@@ -50,6 +50,12 @@ public class AnimalService {
     public Stable addAnimalToNewStable(String animalName, Stable stable) {
         if(animalRepository.existsByName(animalName)) {
             Animal animal = animalRepository.findByNameEquals(animalName);
+            List <Stable> stables = stableRepository.findAll();
+            
+            if (stables.contains(stable)) {
+                throw new ServiceException("This stable already exists");
+            }
+            
             stable.addAnimal(animal);
             stableRepository.save(stable);
             animalRepository.save(animal);
@@ -63,10 +69,14 @@ public class AnimalService {
         if (animalRepository.existsByName(animalName)) {
             Animal animal = animalRepository.findByNameEquals(animalName);
             Stable stable = stableRepository.findById(stableId).get();
-            stable.addAnimal(animal);
-            stableRepository.save(stable);
-            animalRepository.save(animal);
-            return stableRepository.findById(stable.getId()).get();
+            if (!stable.getAnimals().contains(animal)) {
+                stable.addAnimal(animal);
+                stableRepository.save(stable);
+                animalRepository.save(animal);
+                return stableRepository.findById(stable.getId()).get();
+            } else {
+                throw new ServiceException("Animal is already in this stable");
+            }
         } else {
             throw new ServiceException("The animal doesn't exist.");
         }

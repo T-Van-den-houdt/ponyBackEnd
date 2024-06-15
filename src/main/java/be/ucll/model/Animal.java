@@ -1,5 +1,8 @@
 package be.ucll.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -7,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
@@ -34,6 +38,9 @@ public class Animal {
     @ManyToOne
     @JoinColumn(name = "MY_STABLES_ID")
     private Stable stable;
+
+    @ManyToMany(mappedBy = "owningAnimals")
+    private Set<Toy> toys = new HashSet<>();
     
     public Animal(String name, int age) {
         setName(name);
@@ -72,6 +79,10 @@ public class Animal {
         this.stable = stable;
     }
 
+    public void addToy(Toy toy) {
+        toys.add(toy);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -101,5 +112,9 @@ public class Animal {
         if (age != other.age)
             return false;
         return true;
+    }
+
+    public Set<Toy> getToys() {
+        return toys;
     }
 }

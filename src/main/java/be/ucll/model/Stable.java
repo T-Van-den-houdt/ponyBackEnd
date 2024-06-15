@@ -9,7 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -32,7 +34,11 @@ public class Stable {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "stable")
-    List<Animal> animals = new ArrayList<Animal>();;
+    List<Animal> animals = new ArrayList<Animal>();
+
+    @OneToOne
+    @JoinColumn(name = "MY_ADDRESSES_ID")
+    private Address address;
 
     public Stable(String name, int maxAnimals) {
         setName(name);
@@ -74,5 +80,13 @@ public class Stable {
         } else {
             throw new DomainException("There is no more place in this stable.");
         }
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
