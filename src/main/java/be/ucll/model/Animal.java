@@ -1,5 +1,7 @@
 package be.ucll.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +30,7 @@ public class Animal {
     @Max(value = 50, message="Age must be a positive integer between 1 and 50")
     private int age;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "MY_STABLES_ID")
     private Stable stable;

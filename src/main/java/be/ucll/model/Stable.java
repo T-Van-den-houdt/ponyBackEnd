@@ -3,6 +3,8 @@ package be.ucll.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +30,7 @@ public class Stable {
     @Min(value = 1, message = "maxAnimals needs to be positive")
     private int maxAnimals;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "stable")
     List<Animal> animals = new ArrayList<Animal>();;
 
@@ -35,9 +38,13 @@ public class Stable {
         setName(name);
         setMaxAnimals(maxAnimals);
     }
-
+    
     protected Stable() {
         
+    }
+
+    public List<Animal> getAnimals() {
+        return animals;
     }
 
     public String getName() {
