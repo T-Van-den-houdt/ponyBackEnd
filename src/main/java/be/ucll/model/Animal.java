@@ -1,6 +1,8 @@
 package be.ucll.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -41,6 +44,9 @@ public class Animal {
 
     @ManyToMany(mappedBy = "owningAnimals")
     private Set<Toy> toys = new HashSet<>();
+
+    @OneToMany(mappedBy = "animal")
+    private List<MedicalRecord> medicalRecords = new ArrayList<>();
     
     public Animal(String name, int age) {
         setName(name);
@@ -116,5 +122,13 @@ public class Animal {
 
     public Set<Toy> getToys() {
         return toys;
+    }
+
+    public void setMedicalRecord(MedicalRecord medicalRecord) {
+        medicalRecords.add(medicalRecord);
+    }
+
+    public List<MedicalRecord> getMedicalRecords() {
+        return medicalRecords;
     }
 }

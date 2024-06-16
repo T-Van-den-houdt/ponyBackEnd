@@ -1,10 +1,13 @@
 package be.ucll.repository;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 import be.ucll.model.Address;
 import be.ucll.model.Animal;
+import be.ucll.model.MedicalRecord;
 import be.ucll.model.Stable;
 import be.ucll.model.Toy;
 
@@ -15,12 +18,14 @@ public class DbInitializer {
     private StableRepository stableRepository;
     private AddressRepository addressRepository;
     private ToyRepository toyRepository;
+    private MedicalRecordRepository medicalRecordRepository;
 
-    public DbInitializer(AnimalRepository animalRepository, StableRepository stableRepository, AddressRepository addressRepository, ToyRepository toyRepository) {
+    public DbInitializer(AnimalRepository animalRepository, StableRepository stableRepository, AddressRepository addressRepository, ToyRepository toyRepository, MedicalRecordRepository medicalRecordRepository) {
         this.animalRepository = animalRepository;
         this.stableRepository = stableRepository;
         this.addressRepository = addressRepository;
         this.toyRepository = toyRepository;
+        this.medicalRecordRepository = medicalRecordRepository;
     }
 
     @PostConstruct
@@ -47,6 +52,12 @@ public class DbInitializer {
         animal2.addToy(toy1);
         toyRepository.save(toy1);
         animalRepository.save(animal2);
+
+        MedicalRecord medicalRecord1 = new MedicalRecord(LocalDate.of(2001, 9, 11), "Aids");
+        medicalRecord1.setAnimal(animal1);
+        animal1.setMedicalRecord(medicalRecord1);
+        animalRepository.save(animal1);
+        medicalRecordRepository.save(medicalRecord1);
 
         stable1.setAddress(address1);
         stable2.setAddress(address2);
