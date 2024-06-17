@@ -8,6 +8,7 @@ import jakarta.annotation.PostConstruct;
 import be.ucll.model.Address;
 import be.ucll.model.Animal;
 import be.ucll.model.MedicalRecord;
+import be.ucll.model.Pony;
 import be.ucll.model.Stable;
 import be.ucll.model.Toy;
 
@@ -35,11 +36,13 @@ public class DbInitializer {
         Animal animal2 = new Animal("Luna", 10);
         Animal animal3 = new Animal("Muriel", 2);
         Animal animal4 = new Animal("Little", 1);
+        Pony pony1 = new Pony("ponyyy", 5);
 
         animalRepository.save(animal1);
         animalRepository.save(animal2);
         animalRepository.save(animal3);
         animalRepository.save(animal4);
+        animalRepository.save(pony1);
 
         Stable stable1 = new Stable("stblHN", 5);
         Stable stable2 = new Stable("PonyCO", 3);

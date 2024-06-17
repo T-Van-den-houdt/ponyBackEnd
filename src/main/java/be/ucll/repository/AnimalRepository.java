@@ -17,3 +17,4 @@ public interface AnimalRepository extends JpaRepository<Animal, Long>{
 
     Boolean existsByName(String name);
 }
+    
